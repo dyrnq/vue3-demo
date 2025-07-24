@@ -26,7 +26,8 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Inspect from 'vite-plugin-inspect'
 import UnpluginSvgComponent from 'unplugin-svg-component/vite'
 import { fileURLToPath, URL } from "node:url";
-import compression from 'vite-plugin-compression2';
+import {compression, defineAlgorithm, tarball} from 'vite-plugin-compression2';
+import VueDevTools from 'vite-plugin-vue-devtools';
 
 const pathSrc = path.resolve(__dirname, 'src')
 
@@ -35,19 +36,25 @@ export default defineConfig(({ mode }) => {
   return {
     base: '/ui/',
     resolve: {
-      alias: [
-        {
-          find: '@',
-          replacement: pathSrc
-        },
-        // resolve warning of vue-i18n
-        {
-          find: 'vue-i18n',
-          replacement: 'vue-i18n/dist/vue-i18n.cjs.js'
-        }
-      ]
+      alias:{
+        // '@': fileURLToPath(new URL('./src', import.meta.url)),
+        "@": pathSrc,
+        '~': path.resolve(__dirname, './'),
+      }
+      // alias: [
+      //   {
+      //     find: '@',
+      //     replacement: pathSrc
+      //   },
+      //   // resolve warning of vue-i18n
+      //   {
+      //     find: 'vue-i18n',
+      //     replacement: 'vue-i18n/dist/vue-i18n.cjs.js'
+      //   }
+      // ]
     },
     server: {
+      sourcemap: false,
       proxy: {
         '/api': {
           target: env['VITE_APP_DEV_WEB_URL'],
@@ -57,6 +64,7 @@ export default defineConfig(({ mode }) => {
     },
   plugins: [
     Vue(),
+    VueDevTools(),
     AutoImport({
       // Auto import functions from Vue, e.g. ref, reactive, toRef...
       // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
@@ -113,6 +121,14 @@ export default defineConfig(({ mode }) => {
     }),
     Inspect(),
     // compression({ threshold: 1024 }),
+    compression({
+      algorithms: [
+        'gzip',
+        'brotliCompress',
+        defineAlgorithm('deflate', { level: 9 })
+      ],
+      threshold: 1000 // Only compress files larger than 1KB
+    })
 
   ],
   }
