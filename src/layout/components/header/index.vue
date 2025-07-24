@@ -19,7 +19,7 @@
 <template>
   <div class="header-container">
     <div class="left-container">
-      <el-icon :size="20" @click="_changeCollapse">
+      <el-icon color="#3C3D3E" :size="20" @click="_changeCollapse">
         <component :is="isCollapse ? 'Expand' : 'Fold'" />
       </el-icon>
     </div>

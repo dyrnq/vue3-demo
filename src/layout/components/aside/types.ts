@@ -25,32 +25,36 @@ export const MENUS = [
     label: 'Management',
     icon: 'List',
     children: [
+      // {
+      //   label: 'Session',
+      //   router: '/management/session'
+      // },
+      // {
+      //   label: 'Operation',
+      //   router: '/management/operation'
+      // },
+      // {
+      //   label: 'Engine',
+      //   router: '/management/engine'
+      // },
+      // {
+      //   label: 'Server',
+      //   router: '/management/server'
+      // },
       {
-        label: 'Session',
-        router: '/management/session'
-      },
-      {
-        label: 'Operation',
-        router: '/management/operation'
-      },
-      {
-        label: 'Engine',
-        router: '/management/engine'
-      },
-      {
-        label: 'Server',
-        router: '/management/server'
+        label: 'Hello',
+        router: '/management/hello'
       }
     ]
   },
-  {
-    label: 'Swagger',
-    icon: 'List',
-    router: '/swagger'
-  },
-  {
-    label: 'SQL Editor',
-    icon: 'Cpu',
-    router: '/editor'
-  }
+  // {
+  //   label: 'Swagger',
+  //   icon: 'List',
+  //   router: '/swagger'
+  // },
+  // {
+  //   label: 'SQL Editor',
+  //   icon: 'Cpu',
+  //   router: '/editor'
+  // }
 ]

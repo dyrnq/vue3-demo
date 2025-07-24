@@ -18,17 +18,27 @@
 import { defineConfig, loadEnv } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import path from 'path'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import Inspect from 'vite-plugin-inspect'
+import UnpluginSvgComponent from 'unplugin-svg-component/vite'
+import { fileURLToPath, URL } from "node:url";
+import compression from 'vite-plugin-compression2';
+
+const pathSrc = path.resolve(__dirname, 'src')
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return {
     base: '/ui/',
-    plugins: [Vue()],
     resolve: {
       alias: [
         {
           find: '@',
-          replacement: path.resolve(__dirname, 'src')
+          replacement: pathSrc
         },
         // resolve warning of vue-i18n
         {
@@ -44,6 +54,66 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true
         }
       }
-    }
+    },
+  plugins: [
+    Vue(),
+    AutoImport({
+      // Auto import functions from Vue, e.g. ref, reactive, toRef...
+      // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
+      imports: ["vue","vue-router","pinia",'@vueuse/core'],
+
+      // Auto import functions from Element Plus, e.g. ElMessage, ElMessageBox... (with style)
+      // 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox... (带样式)
+      resolvers: [
+        ElementPlusResolver(),
+
+        // Auto import icon components
+        // 自动导入图标组件
+        IconsResolver({
+          prefix: 'Icon',
+        }),
+      ],
+      vueTemplate: true,
+      dts: path.resolve(pathSrc, 'types', 'auto-imports.d.ts'),
+    }),
+
+    Icons({
+      autoInstall: true,
+    }),
+
+
+
+    UnpluginSvgComponent({
+      iconDir: [fileURLToPath(new URL("./src/assets/svg", import.meta.url))],
+      dts: true,
+      dtsDir: "./src/types",
+      prefix: "local",
+      symbolIdFormatter: (svgName: string, prefix: string): string => {
+          const nameArr = svgName.split('/')
+          if (prefix)
+            nameArr.unshift(prefix)
+          const finalName = nameArr.join('-').replace(/\.svg$/, '')
+          console.log(finalName)
+          return finalName;
+        },
+    }),
+   Components({
+      resolvers: [
+        // Auto register icon components
+        // 自动注册图标组件
+        IconsResolver({
+          enabledCollections: ['ep'],
+        }),
+        // Auto register Element Plus components
+        // 自动导入 Element Plus 组件
+        // ElementPlusResolver(),
+      ],
+
+      dts: path.resolve(pathSrc, 'types', 'components.d.ts'),
+    }),
+    Inspect(),
+    // compression({ threshold: 1024 }),
+
+  ],
   }
 })

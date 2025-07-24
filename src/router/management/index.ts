@@ -35,7 +35,12 @@ const router = [
     path: '/management/operation',
     name: 'operation',
     component: () => import('@/views/management/operation/index.vue')
-  }
+  },
+  {
+    path: '/management/hello',
+    name: 'hello',
+    component: () => import('@/views/management/hello/index.vue')
+  }  
 ]
 
 export default router

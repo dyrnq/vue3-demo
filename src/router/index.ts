@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory, createWebHashHistory, Router, RouteRecordRaw} from 'vue-router';
 import overviewRoutes from './overview'
 import managementRoutes from './management'
 import detailRoutes from './detail'
