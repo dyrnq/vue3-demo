@@ -16,11 +16,11 @@
  */
 
 import {createRouter, createWebHistory, createWebHashHistory, Router, RouteRecordRaw} from 'vue-router';
-import overviewRoutes from './overview'
-import managementRoutes from './management'
-import detailRoutes from './detail'
-import swaggerRoutes from './swagger'
-import editorRoutes from './editor'
+// import overviewRoutes from './overview'
+// import managementRoutes from './management'
+// import detailRoutes from './detail'
+// import swaggerRoutes from './swagger'
+// import editorRoutes from './editor'
 import { routes, handleHotUpdate } from 'vue-router/auto-routes'
 import { setupLayouts } from "virtual:meta-layouts";
 
