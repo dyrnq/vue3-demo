@@ -21,33 +21,50 @@ import managementRoutes from './management'
 import detailRoutes from './detail'
 import swaggerRoutes from './swagger'
 import editorRoutes from './editor'
+import { routes, handleHotUpdate } from 'vue-router/auto-routes'
+import { setupLayouts } from "virtual:meta-layouts";
 
-const routes = [
-  {
-    path: '/',
-    name: 'main',
-    redirect: {
-      name: 'layout'
-    }
-  },
-  {
-    path: '/layout',
-    name: 'layout',
-    component: () => import('@/layout/index.vue'),
-    redirect: 'overview',
-    children: [
-      ...overviewRoutes,
-      ...managementRoutes,
-      ...detailRoutes,
-      ...swaggerRoutes,
-      ...editorRoutes
-    ]
-  }
-]
+
+
+// const my_routes = [
+//   {
+//     path: '/',
+//     name: 'main',
+//     redirect: {
+//       name: 'layout'
+//     }
+//   },
+//   {
+//     path: '/layout',
+//     name: 'layout',
+//     component: () => import('@/layout/index.vue'),
+//     redirect: 'overview',
+//     children: [
+//       ...overviewRoutes,
+//       ...managementRoutes,
+//       ...detailRoutes,
+//       ...swaggerRoutes,
+//       ...editorRoutes
+//     ]
+//   }
+// ]
 
 const router = createRouter({
   history: createWebHistory('/ui'),
-  routes
+  scrollBehavior(_to, _from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    }
+    return { top: 0 }
+  },
+  // routes: routes,
+  routes: setupLayouts(routes),
 })
+
+// router.beforeEach(titleMiddleware)
+//Handle hot reload for routes (vue router unplugin)
+if (import.meta.hot) {
+  handleHotUpdate(router)
+}
 
 export default router

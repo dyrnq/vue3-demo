@@ -26,8 +26,16 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Inspect from 'vite-plugin-inspect'
 import UnpluginSvgComponent from 'unplugin-svg-component/vite'
 import { fileURLToPath, URL } from "node:url";
+import { join } from 'node:path'
 import {compression, defineAlgorithm, tarball} from 'vite-plugin-compression2';
 import VueDevTools from 'vite-plugin-vue-devtools';
+import ConfigPlugin from "unplugin-config/vite";
+import VueRouter from 'unplugin-vue-router/vite'
+import { VueRouterAutoImports } from 'unplugin-vue-router'
+import MetaLayouts from "vite-plugin-vue-meta-layouts";
+
+
+
 
 const pathSrc = path.resolve(__dirname, 'src')
 
@@ -69,6 +77,19 @@ export default defineConfig(({ mode }) => {
       }
     },
   plugins: [
+    MetaLayouts(
+      {
+        target: "src/layouts", // 布局目录，默认 src/layouts
+        defaultLayout: "default", // 默认布局，默认为 default
+        importMode: "sync", // 加载模式，支持 sync 和 async。默认为自动处理，SSG 时为 sync，非 SSG 时为 async
+        skipTopLevelRouteLayout: true, // 打开修复 https://github.com/JohnCampionJr/vite-plugin-vue-layouts/issues/134，默认为 false 关闭
+        excludes: [], // 排除路径，仅接受 glob
+      }
+    ),
+    VueRouter({
+      dts: path.resolve(pathSrc, 'types', 'typed-router.d.ts'),
+      routesFolder: path.resolve(pathSrc, 'pages'),
+    }),
     Vue(),
     VueDevTools(),
     AutoImport({
@@ -93,6 +114,10 @@ export default defineConfig(({ mode }) => {
 
     Icons({
       autoInstall: true,
+      compiler: 'vue3',
+      scale: 1.2,
+      defaultStyle: '',
+      defaultClass: 'unplugin-icon'
     }),
 
 
@@ -107,7 +132,7 @@ export default defineConfig(({ mode }) => {
           if (prefix)
             nameArr.unshift(prefix)
           const finalName = nameArr.join('-').replace(/\.svg$/, '')
-          console.log(finalName)
+          //console.log(finalName)
           return finalName;
         },
     }),
@@ -135,7 +160,8 @@ export default defineConfig(({ mode }) => {
         defineAlgorithm('deflate', { level: 9 })
       ],
       threshold: 1000 // Only compress files larger than 1KB
-    })
+    }),
+    ConfigPlugin({}),
 
   ],
   }
