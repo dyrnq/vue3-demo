@@ -26,3 +26,11 @@ const changePage = (page: number) => {
 </script>
 
 <style scoped lang="scss"></style>
+
+<route>
+{
+    meta: {
+        requireAuth: true
+    }
+}
+</route>

@@ -31,6 +31,11 @@
 
 <script lang="ts" setup>
 import {Lock, User} from "@element-plus/icons-vue"
+import Cookies from "js-cookie";
+import { useCookies } from '@vueuse/integrations/useCookies'
+import { useBase64 } from '@vueuse/core'
+
+const cookies = useCookies(['locale']);
 
 const router = useRouter();
 
@@ -53,6 +58,7 @@ const rules = ref({
 
 const login = () => {
 
+  cookies.set('locale', 'zh-CN', { maxAge: 30*24*60*60, secure: true, sameSite: "Strict" })
 }
 
 </script>
