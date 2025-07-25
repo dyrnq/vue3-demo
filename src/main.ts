@@ -26,16 +26,21 @@ import App from './App.vue'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import LoginModal from '@/components/login/index.vue'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import { createHead } from '@unhead/vue/client'
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 store.use(piniaPluginPersistedstate)
+
+const head = createHead()
+
 app
   .component('LoginModal', LoginModal)
   .use(router)
   .use(store)
   .use(i18n)
+  .use(head)
   .use(ElementPlus)
   .mount('#app')

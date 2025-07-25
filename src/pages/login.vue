@@ -34,6 +34,11 @@ import {Lock, User} from "@element-plus/icons-vue"
 import Cookies from "js-cookie";
 import { useCookies } from '@vueuse/integrations/useCookies'
 import { useBase64 } from '@vueuse/core'
+import { useHead } from '@unhead/vue'
+
+useHead({
+  title: 'Login'
+})
 
 const cookies = useCookies(['locale']);
 
