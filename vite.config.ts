@@ -34,6 +34,10 @@ const pathSrc = path.resolve(__dirname, 'src')
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return {
+    build:{
+      cssMinify: false,
+      minify: false,
+    },
     base: '/ui/',
     resolve: {
       alias:{
@@ -58,7 +62,9 @@ export default defineConfig(({ mode }) => {
       proxy: {
         '/api': {
           target: env['VITE_APP_DEV_WEB_URL'],
-          changeOrigin: true
+          changeOrigin: true,
+          //将/api路径去掉
+          rewrite: (p) => p.replace(/^\/api/, ''),
         }
       }
     },
@@ -125,6 +131,7 @@ export default defineConfig(({ mode }) => {
       algorithms: [
         'gzip',
         'brotliCompress',
+        'zstd',
         defineAlgorithm('deflate', { level: 9 })
       ],
       threshold: 1000 // Only compress files larger than 1KB
