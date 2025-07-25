@@ -44,7 +44,11 @@ export const MENUS = [
       {
         label: 'Hello',
         router: '/management/hello'
-      }
+      },
+      {
+        label: 'I18n',
+        router: '/management/i18n'
+      }      
     ]
   },
   // {

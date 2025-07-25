@@ -40,7 +40,12 @@ const router = [
     path: '/management/hello',
     name: 'hello',
     component: () => import('@/views/management/hello/index.vue')
-  }  
+  },
+  {
+    path: '/management/i18n',
+    name: 'i18n',
+    component: () => import('@/views/management/i18n/index.vue')
+  }
 ]
 
 export default router
