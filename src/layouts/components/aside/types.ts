@@ -64,7 +64,11 @@ export const MENUS = [
       {
         label: "Dayjs",
         router: '/management/dayjs'
-      }
+      },
+      {
+        label: "User",
+        router: '/management/user/query'
+      }      
     ]
   },
   // {

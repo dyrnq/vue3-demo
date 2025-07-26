@@ -26,7 +26,8 @@ declare module 'vue-router/auto-routes' {
     '/management/hello/': RouteRecordInfo<'/management/hello/', '/management/hello', Record<never, never>, Record<never, never>>,
     '/management/i18n/': RouteRecordInfo<'/management/i18n/', '/management/i18n', Record<never, never>, Record<never, never>>,
     '/management/lodash/': RouteRecordInfo<'/management/lodash/', '/management/lodash', Record<never, never>, Record<never, never>>,
-    '/management/user/[id]/': RouteRecordInfo<'/management/user/[id]/', '/management/user/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/management/user/edit/[[id]]/': RouteRecordInfo<'/management/user/edit/[[id]]/', '/management/user/edit/:id?', { id?: ParamValueZeroOrOne<true> }, { id?: ParamValueZeroOrOne<false> }>,
+    '/management/user/query/': RouteRecordInfo<'/management/user/query/', '/management/user/query', Record<never, never>, Record<never, never>>,
     '/management/vue-query/': RouteRecordInfo<'/management/vue-query/', '/management/vue-query', Record<never, never>, Record<never, never>>,
     '/overview/': RouteRecordInfo<'/overview/', '/overview', Record<never, never>, Record<never, never>>,
   }
