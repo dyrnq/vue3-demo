@@ -6,10 +6,16 @@
 // biome-ignore lint: disable
 export {}
 declare global {
+  const AxiosError: typeof import('axios')['AxiosError']
+  const AxiosRequestConfig: typeof import('axios')['AxiosRequestConfig']
+  const AxiosResponse: typeof import('axios')['AxiosResponse']
   const EffectScope: typeof import('vue')['EffectScope']
+  const _camelCase: typeof import('lodash')['camelCase']
+  const _round: typeof import('lodash')['round']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
+  const axios: typeof import('axios')['default']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']
@@ -318,10 +324,16 @@ import { UnwrapRef } from 'vue'
 declare module 'vue' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
+    readonly AxiosError: UnwrapRef<typeof import('axios')['AxiosError']>
+    readonly AxiosRequestConfig: UnwrapRef<typeof import('axios')['AxiosRequestConfig']>
+    readonly AxiosResponse: UnwrapRef<typeof import('axios')['AxiosResponse']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly _camelCase: UnwrapRef<typeof import('lodash')['camelCase']>
+    readonly _round: UnwrapRef<typeof import('lodash')['round']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
+    readonly axios: UnwrapRef<typeof import('axios')['default']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>

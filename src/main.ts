@@ -27,6 +27,19 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import LoginModal from '@/components/login/index.vue'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { createHead } from '@unhead/vue/client'
+import { VueQueryPlugin,type VueQueryPluginOptions } from '@tanstack/vue-query'
+
+
+const vueQueryPluginOptions: VueQueryPluginOptions = {
+  queryClientConfig: {
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+      },
+    },
+  },
+}
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
@@ -43,4 +56,5 @@ app
   .use(i18n)
   .use(head)
   .use(ElementPlus)
+  .use(VueQueryPlugin,vueQueryPluginOptions)
   .mount('#app')

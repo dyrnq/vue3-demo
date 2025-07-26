@@ -60,7 +60,12 @@ const __routes = setupLayouts(routes).map(route => ({
 }))
 
 const router = createRouter({
-  history: createWebHistory('/ui'),
+  history: import.meta.env.VITE_ROUTER_HISTORY === "hash"
+      ? createWebHashHistory(import.meta.env.VITE_PUBLIC_PATH)
+      : createWebHistory(import.meta.env.VITE_PUBLIC_PATH),
+
+  
+
   scrollBehavior(_to, _from, savedPosition) {
     if (savedPosition) {
       return savedPosition

@@ -12,6 +12,9 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
+    "@tanstack/vue-query": "^5.83.0",
+    "@tanstack/vue-query-devtools": "^5.83.0",
+    "@types/lodash": "^4.17.20",
     "@types/qs": "^6.14.0",
     "@unhead/vue": "^2.0.12",
     "@vueuse/components": "^13.5.0",
@@ -32,7 +35,10 @@
     "vue-clipboard3": "^2.0.0",
     "vue-i18n": "^11.1.10",
     "vue-router": "^4.5.1",
-    "vue-ts-types": "^1.8.1"
+    "vue-ts-types": "^1.8.1",
+    "vue3-carousel": "^0.16.0",
+    "vue3-toastify": "^0.2.8",
+    "xe-utils": "^3.7.8"
   },
   "devDependencies": {
     "@iconify-json/ep": "^1.2.2",

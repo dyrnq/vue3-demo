@@ -48,7 +48,18 @@ export const MENUS = [
       {
         label: 'I18n',
         router: '/management/i18n'
-      }      
+      },
+      {
+        label: 'Button',
+        router: '/management/button'
+      },
+      {
+        label: 'VueQuery',
+        router: '/management/vue-query'
+      },{
+        label: "Lodash",
+        router: '/management/lodash'
+      }
     ]
   },
   // {

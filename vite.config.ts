@@ -36,17 +36,35 @@ import MetaLayouts from "vite-plugin-vue-meta-layouts";
 
 
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const pathSrc = path.resolve(__dirname, 'src')
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ command,mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
+  // console.log(command)
+  
   return {
     build:{
       cssMinify: false,
       minify: false,
+
+      // minify: 'terser',
+      // terserOptions: {
+      //   compress: {
+      //     drop_console: false,
+      //     drop_debugger: true,
+      //     pure_funcs: ["console.log"]
+      //   },
+      //   format: {
+      //     /** 删除注释 */
+      //     comments: false
+      //   }
+      // },
+
     },
-    base: '/ui/',
+    base: env['VITE_PUBLIC_PATH'],
     resolve: {
       alias:{
         // '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -66,11 +84,14 @@ export default defineConfig(({ mode }) => {
       // ]
     },
     server: {
+      open: true,
       sourcemap: false,
+      cors: true,
+      strictPort: false,
       proxy: {
         '/api': {
           target: env['VITE_APP_DEV_WEB_URL'],
-          changeOrigin: true,
+          changeOrigin: true, //是否允许跨域
           //将/api路径去掉
           rewrite: (p) => p.replace(/^\/api/, ''),
         }
@@ -95,7 +116,22 @@ export default defineConfig(({ mode }) => {
     AutoImport({
       // Auto import functions from Vue, e.g. ref, reactive, toRef...
       // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
-      imports: ["vue","vue-router","pinia",'@vueuse/core'],
+      imports: ["vue","vue-router","pinia",'@vueuse/core',{
+        lodash: [
+          ['round','_round'],
+          ['camelCase','_camelCase'],
+        ]
+      },
+        {
+          axios: [
+            ['default', 'axios'], // import { default as axios } from 'axios',
+            'AxiosResponse',
+            'AxiosError',
+            'AxiosRequestConfig'
+          ],
+        },
+
+      ],
 
       // Auto import functions from Element Plus, e.g. ElMessage, ElMessageBox... (with style)
       // 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox... (带样式)
@@ -109,6 +145,10 @@ export default defineConfig(({ mode }) => {
         }),
       ],
       vueTemplate: true,
+      dirs: [
+        './src/composables/**',
+        // './src/utils/**',
+      ],
       dts: path.resolve(pathSrc, 'types', 'auto-imports.d.ts'),
     }),
 
