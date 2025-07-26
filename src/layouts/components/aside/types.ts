@@ -56,9 +56,14 @@ export const MENUS = [
       {
         label: 'VueQuery',
         router: '/management/vue-query'
-      },{
+      },
+      {
         label: "Lodash",
         router: '/management/lodash'
+      },
+      {
+        label: "Dayjs",
+        router: '/management/dayjs'
       }
     ]
   },
