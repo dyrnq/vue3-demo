@@ -33,6 +33,7 @@ import ConfigPlugin from "unplugin-config/vite";
 import VueRouter from 'unplugin-vue-router/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
 import MetaLayouts from "vite-plugin-vue-meta-layouts";
+import { mockDevServerPlugin } from 'vite-plugin-mock-dev-server'
 
 
 
@@ -84,7 +85,7 @@ export default defineConfig(({ command,mode }) => {
       // ]
     },
     server: {
-      open: true,
+      open: false,
       sourcemap: false,
       cors: true,
       strictPort: false,
@@ -193,16 +194,34 @@ export default defineConfig(({ command,mode }) => {
     Inspect(),
     // compression({ threshold: 1024 }),
     compression({
+      deleteOriginalAssets: false,
       algorithms: [
         'gzip',
-        'brotliCompress',
-        'zstd',
-        defineAlgorithm('deflate', { level: 9 })
+        // 'brotliCompress',
+        // 'zstd',
+        // defineAlgorithm('deflate', { level: 9 })
       ],
       threshold: 1000 // Only compress files larger than 1KB
     }),
     ConfigPlugin({}),
 
+    mockDevServerPlugin({
+      // prefix: '^/api-dev/',
+      // wsPrefix: ['/socket.io'],
+      log: 'debug',
+      reload: true,
+      formidableOptions: {
+        // 配置上传资源存放目录
+        uploadDir: path.join(process.cwd(), '/uploads'),
+      },
+      build: false,
+    }),
+
+
   ],
+  // define 注入的变量， 在 mock文件中也可以使用
+  define: {
+    __IS_DEVELOPMENT__: JSON.stringify(mode === 'development'),
+  }
   }
 })
