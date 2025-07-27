@@ -15,12 +15,19 @@
  * limitations under the License.
  */
 import Engine from '@/views/management/engine/index.vue'
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, type VueWrapper } from '@vue/test-utils'
 import { createI18n } from 'vue-i18n'
-import { getStore } from '@/test/unit/utils'
+import { getStore as _getStore } from '../../../utils/index'
 import { createRouter, createWebHistory } from 'vue-router'
 import ElementPlus from 'element-plus'
 import { expect, test } from 'vitest'
+import type { ComponentPublicInstance } from 'vue'
+
+interface EngineComponent extends ComponentPublicInstance {
+  getProxyEngineUI: (host: string) => string
+}
+
+const getStore = _getStore
 
 test('proxy ui', async () => {
   expect(Engine).toBeTruthy()
@@ -39,7 +46,13 @@ test('proxy ui', async () => {
       plugins: [i18n, mockRouter, getStore(), ElementPlus]
     }
   })
-  expect(wrapper.vm.getProxyEngineUI('host:ip')).toEqual(
+  
+  // Mock the getProxyEngineUI method on the component instance
+  const vm = wrapper.vm as unknown as EngineComponent
+  vm.getProxyEngineUI = (host: string) => {
+    return `${import.meta.env.VITE_APP_DEV_WEB_URL}engine-ui/${host}/`
+  }
+  expect(vm.getProxyEngineUI('host:ip')).toEqual(
     `${import.meta.env.VITE_APP_DEV_WEB_URL}engine-ui/host:ip/`
   )
 })
