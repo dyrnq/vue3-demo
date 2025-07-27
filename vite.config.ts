@@ -95,7 +95,8 @@ export default defineConfig(({ command,mode }) => {
           changeOrigin: true, //是否允许跨域
           //将/api路径去掉
           rewrite: (p) => p.replace(/^\/api/, ''),
-        }
+        },
+        '/static':{}
       }
     },
   plugins: [
